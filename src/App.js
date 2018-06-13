@@ -5,23 +5,40 @@ import Raw from './Components/Raw'
 class App extends Component {
   state = {
     grid: {line1: ["empty","empty","empty","empty","empty","empty"],
-      line2: ["empty","empty","empty","empty","empty","empty"],
-      line3: ["empty","empty","empty","empty","empty","empty"],
-      line4: ["empty","empty","empty","empty","empty","empty"],
-      line5: ["empty","empty","empty","empty","empty","empty"],
-      line6: ["empty","empty","empty","empty","empty","empty"]
+           line2: ["empty","empty","empty","empty","empty","empty"],
+           line3: ["empty","empty","empty","empty","empty","empty"],
+           line4: ["empty","empty","empty","empty","empty","empty"],
+           line5: ["empty","empty","empty","empty","empty","empty"],
+           line6: ["empty","empty","empty","empty","empty","empty"]
     },
     turn: "blue"
   }
 
-  insertToken = (selection) => {
-    console.log(selection)
+  insertToken = (column) => {
+    console.log(column)
     if (this.state.turn==="blue") {
       this.setState ({turn: "red"});
     }
     else {
       this.setState ({turn: "blue"});
     }
+        
+    // if (this.state.grid[tokenFalling])
+    // console.log (this.state.grid[tokenFalling])
+
+    for (let i=6; i>0; i--) {
+      console.log("line"+[i]+" " ,this.state.grid["line"+[i]][column])
+      if (this.state.grid["line"+[i]][column]==="empty"){
+        console.log("hi")
+        const grid = { ... this.state.grid}
+        grid["line"+[i]][column]=this.state.turn
+        console.log(grid)
+        // this.setState({})
+        break
+      }
+        
+    }
+    
     console.log(this.state);
   }
   
