@@ -36,21 +36,16 @@ class App extends Component {
     console.log(this.state);
   }
 
-  // checkWinner= (column, line) => {
-  //   console.log(column, line)
-  //   console.log(this.state.grid["line"+line][column])
-  //   console.log(this.state.grid["line"+(parseInt(line)+1)]);
-    
-  //   this.checkVertical(column, line)
-  // }
-
   checkVertical = (column, line) => {
-    if (this.state.grid["line"+(parseInt(line)+3)]) {
+    if (this.state.grid["line"+(parseInt(line)+3)]) {  //checks down from the last token
+
       if (this.state.turn===this.state.grid["line"+(parseInt(line)+1)][column] && 
       this.state.turn===this.state.grid["line"+(parseInt(line)+2)][column] &&
       this.state.turn===this.state.grid["line"+(parseInt(line)+3)][column]) {
         alert(this.state.turn+" wins!");
         this.resetGame();
+      } else {
+        this.checkHorizontal(column, line);
       }
     } else {
       this.checkHorizontal(column, line);
@@ -58,9 +53,8 @@ class App extends Component {
   }
 
   checkHorizontal (column, line) {
-    let counter = 1;
-    console.log(this.state.grid["line"+line][column])
-    console.log(this.state.grid["line"+line][column+1])
+    let counter = 1; //if it gets to 4 the player will win
+
     if (this.state.grid["line"+line][column+1]===this.state.turn) {
       counter++;
       if (this.state.grid["line"+line][column+2]===this.state.turn) {
@@ -87,7 +81,37 @@ class App extends Component {
     }
   }
 
+  checkDiagonal = (column, line) => {
+    
+    if (this.state.grid["line"+(parseInt(line)+3)]) { //checks down from the last token
 
+      if (this.state.turn===this.state.grid["line"+(parseInt(line)+1)][column+1] && 
+      this.state.turn===this.state.grid["line"+(parseInt(line)+2)][column+2] &&
+      this.state.turn===this.state.grid["line"+(parseInt(line)+3)][column+3]) {
+        alert(this.state.turn+" wins!");
+        this.resetGame();
+      }
+      else if (this.state.turn===this.state.grid["line"+(parseInt(line)+1)][column-1] && 
+      this.state.turn===this.state.grid["line"+(parseInt(line)+2)][column-2] &&
+      this.state.turn===this.state.grid["line"+(parseInt(line)+3)][column-3]) {
+        alert(this.state.turn+" wins!");
+        this.resetGame();
+      }
+    } else { //checks up from the last token
+      if (this.state.turn===this.state.grid["line"+(parseInt(line)-1)][column+1] && 
+      this.state.turn===this.state.grid["line"+(parseInt(line)-2)][column+2] &&
+      this.state.turn===this.state.grid["line"+(parseInt(line)-3)][column+3]) {
+        alert(this.state.turn+" wins!");
+        this.resetGame();
+      }
+      else if (this.state.turn===this.state.grid["line"+(parseInt(line)-1)][column-1] && 
+      this.state.turn===this.state.grid["line"+(parseInt(line)-2)][column-2] &&
+      this.state.turn===this.state.grid["line"+(parseInt(line)-3)][column-3]) {
+        alert(this.state.turn+" wins!");
+        this.resetGame();
+      }
+    }
+  }
 
   resetGame = () => {
     this.setState({
