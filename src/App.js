@@ -29,33 +29,65 @@ class App extends Component {
         const grid = { ...this.state.grid};
         grid[line][column]=this.state.turn;
         this.setState({grid:grid})
-        this.checkwinner(column, i);
+        this.checkVertical(column, i);
         break;
       }
     }
     console.log(this.state);
   }
 
-  checkwinner= (column, line) => {
-    console.log(column, line)
-    console.log(this.state.grid["line"+line][column])
-    console.log(this.state.grid["line"+(parseInt(line)+1)]);
+  // checkWinner= (column, line) => {
+  //   console.log(column, line)
+  //   console.log(this.state.grid["line"+line][column])
+  //   console.log(this.state.grid["line"+(parseInt(line)+1)]);
     
+  //   this.checkVertical(column, line)
+  // }
+
+  checkVertical = (column, line) => {
     if (this.state.grid["line"+(parseInt(line)+3)]) {
-      if (this.state.turn===this.state.grid["line"+(parseInt(line)+1)][column] && this.state.turn && this.state.turn===this.state.grid["line"+(parseInt(line)+2)][column]&&this.state.turn===this.state.grid["line"+(parseInt(line)+3)][column]) {
+      if (this.state.turn===this.state.grid["line"+(parseInt(line)+1)][column] && 
+      this.state.turn===this.state.grid["line"+(parseInt(line)+2)][column] &&
+      this.state.turn===this.state.grid["line"+(parseInt(line)+3)][column]) {
         alert(this.state.turn+" wins!");
         this.resetGame();
       }
+    } else {
+      this.checkHorizontal(column, line);
     }
-
-    else if (this.state.grid["line"+(parseInt(line)+3)]) {
-      if (this.state.turn===this.state.grid["line"+(parseInt(line)+1)][column] && this.state.turn && this.state.turn===this.state.grid["line"+(parseInt(line)+2)][column]&&this.state.turn===this.state.grid["line"+(parseInt(line)+3)][column]) {
-        alert(this.state.turn+" wins!");
-        this.resetGame();
-      }
-    }
-
   }
+
+  checkHorizontal (column, line) {
+    let counter = 1;
+    console.log(this.state.grid["line"+line][column])
+    console.log(this.state.grid["line"+line][column+1])
+    if (this.state.grid["line"+line][column+1]===this.state.turn) {
+      counter++;
+      if (this.state.grid["line"+line][column+2]===this.state.turn) {
+        counter++;
+        if (this.state.grid["line"+line][column+3]===this.state.turn) {
+          counter++;
+        }
+      }
+    }
+    if (this.state.grid["line"+line][column-1]===this.state.turn) {
+      counter++;
+      if (this.state.grid["line"+line][column-2]===this.state.turn) {
+        counter++;
+        if (this.state.grid["line"+line][column-3]===this.state.turn) {
+          counter++;
+        }
+      }
+    }
+    if (counter===4) {
+      alert(this.state.turn+" wins!");
+      this.resetGame();
+    } else {
+      this.checkDiagonal(column, line);
+    }
+  }
+
+
 
   resetGame = () => {
     this.setState({
