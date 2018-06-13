@@ -6,7 +6,8 @@
   width: 850px;
   min-width: 600px;
   height: 600px;
-  background-color: yellow;
+  background-color: yellowgreen;
+  margin-bottom: 25px;
 }
 
 .empty {
